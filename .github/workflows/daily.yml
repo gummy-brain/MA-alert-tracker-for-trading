@@ -30,4 +30,6 @@ jobs:
       - name: Run MA alert tracker
         env:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          SENDER_EMAIL:   ${{ secrets.SENDER_EMAIL }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
         run: python tracker.py

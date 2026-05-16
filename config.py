@@ -34,11 +34,9 @@ SELL_THRESHOLD_PCT = 0.5
 VOLUME_AVG_DAYS = 20
 
 # --- Email settings ---
-# Sender: your Gmail address
-# Receiver: where you want alerts sent (can be the same address)
-SENDER_EMAIL    = "your.gmail@gmail.com"
-RECEIVER_EMAIL  = "your.gmail@gmail.com"
-
-# Do NOT put your password here.
-# Set it as an environment variable called EMAIL_PASSWORD.
-# On PythonAnywhere: Dashboard → Files → .env  (see README for instructions)
+# These are read from GitHub Secrets — do not put real values here.
+# Add SENDER_EMAIL, RECEIVER_EMAIL, and EMAIL_PASSWORD as repository secrets:
+# GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+import os
+SENDER_EMAIL   = os.environ.get("SENDER_EMAIL", "your.email@gmail.com")
+RECEIVER_EMAIL = os.environ.get("RECEIVER_EMAIL", "your.email@gmail.com")
