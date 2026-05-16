@@ -339,9 +339,11 @@ def main():
         df      = fetch_data(ticker)
         signals = compute_signals(df)
 
+        log.info(f"  Data rows fetched: {len(df)}")
         if signals["error"]:
             log.warning(f"  Skipped {ticker}: {signals['error']}")
             continue
+        log.info(f"  buy_signal={signals['buy_signal']} sell_signal={signals['sell_signal']}")
 
         if signals["buy_signal"]:
             log.info(f"  BUY signal detected for {ticker}")

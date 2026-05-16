@@ -3,6 +3,8 @@
 # Edit this file to customise your tracked instruments and alert settings.
 # =============================================================================
 
+import os
+
 # --- Instruments to track ---
 # Use Yahoo Finance tickers. Suffix guide:
 #   .DE  = Xetra (Germany)   e.g. VWCE.DE
@@ -42,6 +44,5 @@ TEST_MODE = True
 # These are read from GitHub Secrets — do not put real values here.
 # Add SENDER_EMAIL, RECEIVER_EMAIL, and EMAIL_PASSWORD as repository secrets:
 # GitHub repo → Settings → Secrets and variables → Actions → New repository secret
-import os
 SENDER_EMAIL   = os.environ.get("SENDER_EMAIL", "your.email@gmail.com")
 RECEIVER_EMAIL = os.environ.get("RECEIVER_EMAIL", "your.email@gmail.com")
