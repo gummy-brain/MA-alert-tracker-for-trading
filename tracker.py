@@ -128,7 +128,7 @@ def compute_signals(df: pd.DataFrame) -> dict:
 
     # ---- BUY signal --------------------------------------------------------
     if TEST_MODE:
-        result["buy_signal"] = True
+        result["buy_signal"] = False
     else:
         # 1. Price crossed above 50-day SMA  (was below yesterday, above today)
         crossed_above_50 = (yest_close <= yest_sma50) and (today_close > today_sma50)
@@ -209,7 +209,7 @@ def build_email_body(alerts: list[dict]) -> tuple[str, str]:
     lines += [
         "---",
         "Check your charts before acting. This alert is informational only.",
-        "MA Alert Tracker — github.com/YOUR_USERNAME/ma-alert-tracker",
+        "MA Alert Tracker — github.com/gummy-brain/MA-alert-tracker-for-trading",
     ]
 
     plain = "\n".join(lines)
@@ -283,8 +283,8 @@ def build_email_body(alerts: list[dict]) -> tuple[str, str]:
   {sections}
   <p style="margin-top:32px; font-size:12px; color:#999; border-top:1px solid #eee; padding-top:12px;">
     Check your charts before acting. This alert is informational only.<br>
-    <a href="https://github.com/YOUR_USERNAME/ma-alert-tracker" style="color:#999;">
-      github.com/YOUR_USERNAME/ma-alert-tracker
+    <a href="https://github.com/gummy-brain/MA-alert-tracker-for-traiding" style="color:#999;">
+      github.com/gummy-brain/MA-alert-tracker-for-trading
     </a>
   </p>
 </body></html>"""
