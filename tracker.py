@@ -26,6 +26,7 @@ import yfinance as yf
 import pandas as pd
 
 from config import (
+    TEST_MODE,
     TICKERS,
     SHORT_MA,
     LONG_MA,
@@ -126,20 +127,25 @@ def compute_signals(df: pd.DataFrame) -> dict:
     })
 
     # ---- BUY signal --------------------------------------------------------
-    # 1. Price crossed above 50-day SMA  (was below yesterday, above today)
-    crossed_above_50 = (yest_close <= yest_sma50) and (today_close > today_sma50)
-    # 2. Price is rising
-    price_rising = today_close > yest_close
-    # 3. 50-day SMA is rising
-    sma50_rising = today_sma50 > yest_sma50
-
-    result["buy_signal"] = crossed_above_50 and price_rising and sma50_rising
+    if TEST_MODE:
+        result["buy_signal"] = True
+    else:
+        # 1. Price crossed above 50-day SMA  (was below yesterday, above today)
+        crossed_above_50 = (yest_close <= yest_sma50) and (today_close > today_sma50)
+        # 2. Price is rising
+        price_rising = today_close > yest_close
+        # 3. 50-day SMA is rising
+        sma50_rising = today_sma50 > yest_sma50
+        result["buy_signal"] = crossed_above_50 and price_rising and sma50_rising
 
     # ---- SELL signal -------------------------------------------------------
     # Price closes more than SELL_THRESHOLD_PCT% below the 150-day SMA
     pct_below = (today_sma150 - today_close) / today_sma150 * 100
-    result["sell_signal"] = pct_below > SELL_THRESHOLD_PCT
     result["pct_below_150"] = pct_below  # useful context in email
+    if TEST_MODE:
+        result["sell_signal"] = True
+    else:
+        result["sell_signal"] = pct_below > SELL_THRESHOLD_PCT
 
     return result
 
@@ -203,7 +209,7 @@ def build_email_body(alerts: list[dict]) -> tuple[str, str]:
     lines += [
         "---",
         "Check your charts before acting. This alert is informational only.",
-        "MA Alert Tracker — github.com/gummy-brain/MA-alert-tracker-for-trading",
+        "MA Alert Tracker — github.com/YOUR_USERNAME/ma-alert-tracker",
     ]
 
     plain = "\n".join(lines)

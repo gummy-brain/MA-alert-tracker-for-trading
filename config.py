@@ -33,6 +33,11 @@ SELL_THRESHOLD_PCT = 0.5
 # Volume window used to calculate average volume for context.
 VOLUME_AVG_DAYS = 20
 
+# --- Test mode ---
+# Set to True to force both signals to fire on every instrument.
+# Use this to verify the email is working, then set back to False.
+TEST_MODE = True
+
 # --- Email settings ---
 # These are read from GitHub Secrets — do not put real values here.
 # Add SENDER_EMAIL, RECEIVER_EMAIL, and EMAIL_PASSWORD as repository secrets:
