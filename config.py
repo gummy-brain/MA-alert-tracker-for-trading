@@ -36,8 +36,8 @@ VOLUME_AVG_DAYS = 20
 # --- Email settings ---
 # Sender: your Gmail address
 # Receiver: where you want alerts sent (can be the same address)
-SENDER_EMAIL    = "baltas.gluosnis@gmail.com"
-RECEIVER_EMAIL  = "baltas.gluosnis@gmail.com"
+SENDER_EMAIL    = "your.gmail@gmail.com"
+RECEIVER_EMAIL  = "your.gmail@gmail.com"
 
 # Do NOT put your password here.
 # Set it as an environment variable called EMAIL_PASSWORD.

@@ -1,12 +1,12 @@
 # MA Alert Tracker
 
-A lightweight Python tool that monitors index funds and stocks for moving average crossover signals and sends a daily email summary. Designed to run for free on [PythonAnywhere](https://www.pythonanywhere.com/) with no PC required.
+A lightweight Python tool that monitors index funds and stocks for moving average crossover signals and sends a daily email summary. Runs for free on **GitHub Actions** — no server, no subscription, no PC needed.
 
 \---
 
 ## What it does
 
-The tracker checks each instrument you configure once per day and detects two signals:
+The tracker checks each instrument you configure once per day (weekdays only, after European markets close) and detects two signals:
 
 ### Buy signal — all three conditions must be true simultaneously
 
@@ -58,21 +58,25 @@ No signals → no email. You only hear from it when something happens.
 
 ```
 ma-alert-tracker/
-├── tracker.py       # Main script — fetches data, detects signals, sends email
-├── config.py        # Your tickers, MA periods, email addresses
-├── requirements.txt # Python dependencies
-├── .gitignore       # Keeps secrets and cache out of git
-└── README.md        # This file
+├── .github/
+│   └── workflows/
+│       └── daily.yml    # GitHub Actions schedule — runs every weekday at 18:00 UTC
+├── tracker.py           # Main script — fetches data, detects signals, sends email
+├── config.py            # Your tickers, MA periods, email addresses
+├── requirements.txt     # Python dependencies
+├── .gitignore           # Keeps secrets and cache out of git
+├── STRATEGY.md          # Research backing, design decisions, and known limitations
+└── README.md            # This file
 ```
 
 \---
 
 ## Setup
 
-### 1\. Clone the repo
+### 1\. Fork or clone the repo
 
 ```bash
-git clone https://github.com/YOUR\\\_USERNAME/ma-alert-tracker.git
+git clone https://github.com/gummy-brain/MA-alert-tracker-for-trading.git
 cd ma-alert-tracker
 ```
 
@@ -81,7 +85,7 @@ cd ma-alert-tracker
 Open `config.py` and:
 
 * Add your tickers to the `TICKERS` dictionary
-* Set your `SENDER\\\_EMAIL` and `RECEIVER\\\_EMAIL` (both can be your Gmail)
+* Set your `SENDER\_EMAIL` and `RECEIVER\_EMAIL` (both can be your Gmail)
 
 **Ticker format guide:**
 
@@ -104,51 +108,44 @@ Gmail requires an App Password (not your normal password) for SMTP access.
 3. Search for **App Passwords** in the security settings
 4. Create one for "Mail" → copy the 16-character password
 
-You'll use this in the next step — never put it in `config.py`.
+### 4\. Add the App Password as a GitHub Secret
+
+This is how your password is kept secure — it is stored encrypted in GitHub and never exposed in your code.
+
+1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Name: `EMAIL_PASSWORD`
+4. Value: paste your 16-character Gmail App Password
+5. Click **Add secret**
+
+### 5\. Push to GitHub — Actions starts automatically
+
+Once your code is pushed and the secret is set, GitHub Actions will run the tracker automatically every weekday at 18:00 UTC (after European markets close).
+
+To run it immediately without waiting for the schedule:
+
+1. Go to your repo → **Actions** tab
+2. Click **Daily MA Alert** in the left sidebar
+3. Click **Run workflow** → **Run workflow**
+
+Check your inbox after a minute.
 
 \---
 
-## Running on PythonAnywhere (free, no PC needed)
+## Adjusting the schedule
 
-### 1\. Create a free account at [pythonanywhere.com](https://www.pythonanywhere.com/)
+The schedule is set in `.github/workflows/daily.yml`. The default is `0 18 \* \* 1-5` which means 18:00 UTC on weekdays. To change it, edit the cron expression:
 
-### 2\. Open a Bash console and clone the repo
-
-```bash
-git clone https://github.com/YOUR\\\_gummy-brain/MA-alert-tracker-for-trading.git
-cd ma-alert-tracker
-pip install -r requirements.txt --user
+```yaml
+- cron: '0 18 \* \* 1-5'
+#        │  │  │ │ └─ weekdays only (1=Mon, 5=Fri)
+#        │  │  │ └─── every month
+#        │  │  └───── every day of month
+#        │  └──────── hour in UTC
+#        └─────────── minute
 ```
 
-### 3\. Set your email password as an environment variable
-
-In the PythonAnywhere Bash console:
-
-```bash
-echo 'export EMAIL\\\_PASSWORD="your-16-char-app-password"' >> \\\~/.bashrc
-source \\\~/.bashrc
-```
-
-### 4\. Test it manually first
-
-```bash
-python tracker.py
-```
-
-Check your inbox. If no signals fire today (likely), temporarily set `SELL\\\_THRESHOLD\\\_PCT = 999` in config.py to force a sell alert for testing, then revert.
-
-### 5\. Schedule the daily task
-
-1. Go to **Dashboard → Tasks** in PythonAnywhere
-2. Click **Add a new scheduled task**
-3. Set time to e.g. `18:00` (after European markets close)
-4. Command:
-
-```
-   /bin/bash -c 'source \\\~/.bashrc \\\&\\\& cd \\\~/ma-alert-tracker \\\&\\\& python tracker.py'
-   ```
-
-5. Save — it will run every day automatically
+A helpful tool for building cron expressions: [crontab.guru](https://crontab.guru)
 
 \---
 
@@ -156,10 +153,10 @@ Check your inbox. If no signals fire today (likely), temporarily set `SELL\\\_TH
 
 |Setting in config.py|Default|What it controls|
 |-|-|-|
-|`SHORT\\\_MA`|50|MA period for buy signal|
-|`LONG\\\_MA`|150|MA period for sell signal|
-|`SELL\\\_THRESHOLD\\\_PCT`|0.5|% below 150 MA to trigger sell|
-|`VOLUME\\\_AVG\\\_DAYS`|20|Window for average volume calculation|
+|`SHORT\_MA`|50|MA period for buy signal|
+|`LONG\_MA`|150|MA period for sell signal|
+|`SELL\_THRESHOLD\_PCT`|0.5|% below 150 MA to trigger sell|
+|`VOLUME\_AVG\_DAYS`|20|Window for average volume calculation|
 
 \---
 
@@ -176,6 +173,8 @@ Index funds are smoothed by diversification — they don't spike wildly. A 0.5% 
 ### Why 150 days for the sell signal?
 
 The 150-day SMA is a medium-to-long term trend indicator. Selling when price breaks this line — rather than waiting for the SMA itself to visibly turn down — means you act earlier in a potential downtrend, before significant losses accumulate.
+
+See [STRATEGY.md](STRATEGY.md) for the research backing, design decisions, and known limitations.
 
 \---
 

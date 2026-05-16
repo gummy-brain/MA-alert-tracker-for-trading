@@ -1,0 +1,33 @@
+name: Daily MA Alert
+
+on:
+  schedule:
+    # Runs at 18:00 UTC every weekday (Mon-Fri)
+    # Adjust the hour to suit your timezone:
+    #   18:00 UTC = 21:00 Vilnius (EET, UTC+3) in summer
+    #   18:00 UTC = 20:00 Vilnius (EET, UTC+2) in winter
+    - cron: '0 18 * * 1-5'
+
+  # Allows you to run this manually from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  run-tracker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run MA alert tracker
+        env:
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python tracker.py

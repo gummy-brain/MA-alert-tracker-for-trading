@@ -12,7 +12,7 @@ Checks each tracked instrument daily for two signals:
 Volume context is included in every alert so you can judge buying/selling
 pressure manually after receiving the notification.
 
-Run this script once daily (PythonAnywhere scheduled task recommended).
+Run this script once daily via GitHub Actions (see .github/workflows/daily.yml).
 """
 
 import os
