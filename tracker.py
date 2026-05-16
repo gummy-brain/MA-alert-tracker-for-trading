@@ -245,40 +245,35 @@ def build_email_body(alerts: list[dict]) -> tuple[str, str]:
 
     sections = ""
     if buy_alerts:
-        sections += f"""
-        <h2 style="color:#1a7a3f; font-size:16px; margin:24px 0 8px;">
-          ↑ Buy signals — price crossed above rising 50-day SMA
-        </h2>
-        <table width="100%" cellpadding="0" cellspacing="0"
-               style="border-collapse:collapse; font-size:14px; background:#fff;
-                      border:1px solid #e0e0e0; border-radius:6px; overflow:hidden;">
-          <thead>
-            <tr style="background:#f5f5f5;">
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Instrument</th>
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Signal detail</th>
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Volume</th>
-            </tr>
-          </thead>
-          <tbody>{buy_rows}</tbody>
-        </table>""".replace("{buy_rows}", signal_rows(buy_alerts, "#1a7a3f", "BUY"))
+        buy_rows_html = signal_rows(buy_alerts, "#1a7a3f", "BUY")
+        sections += (
+            "<h2 style='color:#1a7a3f; font-size:16px; margin:24px 0 8px;'>"
+            "&#8593; Buy signals &mdash; price crossed above rising 50-day SMA</h2>"
+            "<table width='100%' cellpadding='0' cellspacing='0' "
+            "style='border-collapse:collapse; font-size:14px; background:#fff; "
+            "border:1px solid #e0e0e0; border-radius:6px; overflow:hidden;'>"
+            "<thead><tr style='background:#f5f5f5;'>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Instrument</th>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Signal detail</th>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Volume</th>"
+            "</tr></thead><tbody>" + buy_rows_html + "</tbody></table>"
+        )
 
     if sell_alerts:
-        sections += f"""
-        <h2 style="color:#c0392b; font-size:16px; margin:24px 0 8px;">
-          ↓ Sell signals — price dipped below 150-day SMA
-        </h2>
-        <table width="100%" cellpadding="0" cellspacing="0"
-               style="border-collapse:collapse; font-size:14px; background:#fff;
-                      border:1px solid #e0e0e0; border-radius:6px; overflow:hidden;">
-          <thead>
-            <tr style="background:#f5f5f5;">
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Instrument</th>
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Signal detail</th>
-              <th style="padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;">Volume</th>
-            </tr>
-          </thead>
-          <tbody>{sell_rows}</tbody>
-        </table>""".replace("{sell_rows}", signal_rows(sell_alerts, "#c0392b", "SELL"))
+        sell_rows_html = signal_rows(sell_alerts, "#c0392b", "SELL")
+        sections += (
+            "<h2 style='color:#c0392b; font-size:16px; margin:24px 0 8px;'>"
+            "&#8595; Sell signals &mdash; price dipped below 150-day SMA</h2>"
+            "<table width='100%' cellpadding='0' cellspacing='0' "
+            "style='border-collapse:collapse; font-size:14px; background:#fff; "
+            "border:1px solid #e0e0e0; border-radius:6px; overflow:hidden;'>"
+            "<thead><tr style='background:#f5f5f5;'>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Instrument</th>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Signal detail</th>"
+            "<th style='padding:8px; text-align:left; font-weight:600; font-size:12px; color:#888;'>Volume</th>"
+            "</tr></thead><tbody>" + sell_rows_html + "</tbody></table>"
+        )
+
 
     html = f"""<!DOCTYPE html>
 <html><body style="font-family:Arial,sans-serif; max-width:680px; margin:0 auto; color:#222; padding:16px;">
