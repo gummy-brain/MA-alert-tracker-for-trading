@@ -24,7 +24,7 @@ TICKERS = {
     "NUKL.DE":    "VanEck Uranium and Nuclear Technologies UCITS ETF (EUR, XETRA)",
     "DRON.DE":    "Drone UCITS ETF Accumulating Share Class USD (Acc) (EUR, XETRA)",
     "DFND.PA":    "iShares Global Aerospace & Defence (Acc) (EUR, Paris)",
-    "SEME.MI":    "iShares MSCI Global Semiconductors UCITS ETF USD Acc (EUR, Milan)",
+    "SEME.MI":    "iShares MSCI Global Semiconductors UCITS ETF USD Acc (EUR, Milan)"
     # Add more below in the same format:
     # "TICKER": "Friendly name",
 }
