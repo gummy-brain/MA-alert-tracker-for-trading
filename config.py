@@ -14,10 +14,17 @@ import os
 #   No suffix = US-listed    e.g. SPY, QQQ, AAPL
 
 TICKERS = {
-    "VWCE.DE":  "Vanguard FTSE All-World (EUR, Xetra)",
-    "CSPX.L":   "iShares Core S&P 500 (USD, LSE)",
-    "MEUD.PA":  "Amundi MSCI Europe (EUR, Paris)",
-    "SPY":      "SPDR S&P 500 ETF (USD)",
+    "VUAA.MI":    "Vanguard S&P 500 UCITS ETF USD Accumulation (EUR, Milan)",
+    "WGLD.PA":    "WisdomTree Core Physical Gold USD ETC (EUR, Paris)",
+    "SSLV.MI":    "Invesco Physical Silver ETC (EUR, Milan)",
+    "CEBS.DE":    "iShares Copper Miners UCITS ETF (EUR, XETRA)",
+    "EUNK.DE":    "iShares Core MSCI Europe UCITS ETF EUR (Acc) (EUR, XETRA)",
+    "LOCK.MI":    "iShares Digital Security UCITS ETF (EUR, Milan)",
+    "QOMP.DE":    "iShares Quantum Computing UCITS ETF USD (Acc) (EUR, XETRA)",
+    "NUKL.DE":    "VanEck Uranium and Nuclear Technologies UCITS ETF (EUR, XETRA)",
+    "DRON.DE":    "Drone UCITS ETF Accumulating Share Class USD (Acc) (EUR, XETRA)",
+    "DFND.PA":    "iShares Global Aerospace & Defence (Acc) (EUR, Paris)",
+    "SEME.MI":    "iShares MSCI Global Semiconductors UCITS ETF USD Acc (EUR, Milan)",
     # Add more below in the same format:
     # "TICKER": "Friendly name",
 }
