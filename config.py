@@ -38,7 +38,7 @@ VOLUME_AVG_DAYS = 20
 # --- Test mode ---
 # Set to True to force both signals to fire on every instrument.
 # Use this to verify the email is working, then set back to False.
-TEST_MODE = True
+TEST_MODE = False
 
 # --- Email settings ---
 # These are read from GitHub Secrets — do not put real values here.
