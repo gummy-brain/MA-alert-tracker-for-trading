@@ -1,6 +1,12 @@
 # MA Alert Tracker
 
-A lightweight Python tool that monitors index funds and stocks for moving average crossover signals and sends a daily email summary. Runs for free on **GitHub Actions** — no server, no subscription, no PC needed.
+This is Python tool that monitors index funds and stocks for moving average crossover signals and sends a daily email summary. Runs for free on **GitHub Actions** — no server, no subscription, no PC needed.
+
+I came up with this tool while researching beginner-friendly approaches to timing buy and sell decisions for my own portfolio. Moving Average crossovers seemed to be a straightforward and well-grounded method for this — see STRATEGY.md for the theoretical background.
+
+Once I knew what I wanted to track, I needed a way to monitor these signals without checking my portfolio constantly. Trading apps like Trading 212 and TradingView offer similar alert functionality, but only with a paid subscription. Building my own alerts was the practical alternative.
+
+As a beginner investor, I might improve and expand the tracker as my knowledge grows.
 
 \---
 
@@ -193,5 +199,5 @@ Historical price and volume data is sourced from **Yahoo Finance** via the `yfin
 
 ## Disclaimer
 
-This tool is for informational purposes only. It does not constitute financial advice. Always do your own research before making investment decisions.
+This tool is for informational purposes only. It does not constitute financial advice. I am just a beginner investor, so please do your own research before making any investment decisions.
 
